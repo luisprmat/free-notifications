@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('messages', [MessageController::class, 'store'])->name('messages.store');
+Route::get('messages/{message}', [MessageController::class, 'show'])->name('messages.show');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
