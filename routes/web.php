@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,5 @@ Route::get('/', function () {
 Route::post('messages', [MessageController::class, 'store'])->name('messages.store');
 Route::get('messages/{message}', [MessageController::class, 'show'])->name('messages.show');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])
+    ->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
