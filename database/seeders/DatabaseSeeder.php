@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,10 +15,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::truncate();
+        $this->truncateTables([
+            'messages',
+            'users',
+        ]);
 
         $this->call([
             UserSeeder::class
         ]);
+    }
+
+    protected function truncateTables(array $tables)
+    {
+        // Disable checking of foreing keys
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
+
+        foreach ($tables as $table) {
+            DB::table($table)->truncate();
+        }
+
+        // Activate checking of foreing keys
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
     }
 }
