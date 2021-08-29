@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Message;
+use App\Notifications\MessageSent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 
@@ -21,12 +23,15 @@ class MessageController extends Controller
             'to_user_id' => 'usuario'
         ]);
 
-        Message::create([
+        $message = Message::create([
             'subject' => $request->subject,
             'body' => $request->body,
             'from_user_id' => auth()->id(),
             'to_user_id' => $request->to_user_id
         ]);
+
+        $user = User::find($request->to_user_id);
+        $user->notify(new MessageSent($message));
 
         $request->session()->flash('flash.banner', 'Tu mensaje fue enviado!');
         $request->session()->flash('flash.bannerStyle', 'success');
