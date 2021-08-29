@@ -21,7 +21,17 @@ class MessageController extends Controller
             'to_user_id' => 'usuario'
         ]);
 
-        return $request->all();
+        Message::create([
+            'subject' => $request->subject,
+            'body' => $request->body,
+            'from_user_id' => auth()->id(),
+            'to_user_id' => $request->to_user_id
+        ]);
+
+        $request->session()->flash('flash.banner', 'Tu mensaje fue enviado!');
+        $request->session()->flash('flash.bannerStyle', 'success');
+
+        return redirect()->back();
     }
 
     public function show(Message $message)
