@@ -42,7 +42,7 @@ class MessageSent extends Notification
     {
         return (new MailMessage)
             ->subject('Tienes un nuevo mensaje')
-            ->markdown('email.message', [
+            ->markdown('emails.message', [
                 'message' => $this->message
             ]);
     }
