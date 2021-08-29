@@ -1,12 +1,12 @@
 @component('mail::message')
-# Introduction
+# Hola Coders
 
-The body of your message.
+Para leer tu mensaje haz clic en el botón.
 
-@component('mail::button', ['url' => ''])
-Button Text
+@component('mail::button', ['url' => route('messages.show', $message)])
+Ver Mensaje
 @endcomponent
 
-Thanks,<br>
-{{ config('app.name') }}
+Hasta luego,<br>
+*Free Notifications*
 @endcomponent

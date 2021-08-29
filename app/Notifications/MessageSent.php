@@ -40,7 +40,11 @@ class MessageSent extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->markdown('email.message');
+        return (new MailMessage)
+            ->subject('Tienes un nuevo mensaje')
+            ->markdown('email.message', [
+                'message' => $this->message
+            ]);
     }
 
     /**
