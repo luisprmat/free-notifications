@@ -8,7 +8,14 @@ class NotificationComponent extends Component
 {
     public $notifications, $count;
 
+    protected $listeners = ['notification'];
+
     public function mount()
+    {
+        $this->notification();
+    }
+
+    public function notification()
     {
         $this->notifications = auth()->user()->notifications;
         $this->count = auth()->user()->unreadNotifications->count();
